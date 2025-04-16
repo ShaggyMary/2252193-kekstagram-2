@@ -51,6 +51,25 @@ const clearOldPosts = () => {
   });
 };
 
+const btnFilterChange = (evt) => {
+  if (!evt.target.classList.contains('img-filters__button')) {
+    return;
+  }
+  const filter = evt.target.id;
+
+  switch (filter) {
+    case 'filter-discussed':
+      changeFilterClassName(filter);
+      break
+    case 'filter-random':
+      changeFilterClassName(filter);
+      break;
+    case 'filter-default':
+      changeFilterClassName(filter);
+      break;
+  }
+};
+
 const postFilterChange = debounce((evt, userPosts) => {
   if (!evt.target.classList.contains('img-filters__button')) {
     return;
@@ -61,15 +80,12 @@ const postFilterChange = debounce((evt, userPosts) => {
 
   switch (filter) {
     case 'filter-discussed':
-      changeFilterClassName(filter);
       renderThumbs(filterPostsDiscuss(userPosts));
-      break;
+      break
     case 'filter-random':
-      changeFilterClassName(filter);
       renderThumbs(filterPostsRandom(userPosts, POST_MAX_COUNT));
       break;
     case 'filter-default':
-      changeFilterClassName(filter);
       renderThumbs(filterPostsDefault(userPosts));
       break;
   }
@@ -77,6 +93,7 @@ const postFilterChange = debounce((evt, userPosts) => {
 
 const initPostsFilter = (userPosts) => {
   imgFiltersForm.addEventListener('click', (evt) => postFilterChange(evt, userPosts));
+  imgFiltersForm.addEventListener('click', btnFilterChange);
   showFilterPosts();
   enableFilterPosts();
 };
